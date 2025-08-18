@@ -1,0 +1,36 @@
+flowchart TD
+    Start([Start])
+    Start --> Trigger["Inbound call triggers workflow"]
+    Trigger --> FraudCheck["Check for fraud"]
+    FraudCheck --> LookupANI["Lookup ANI in Fraud Data table"]
+    LookupANI -->|Found| FraudTrue1["Set conversation data Fraud = true"]
+    FraudTrue1 --> Disconnect["Disconnect"]
+    LookupANI -->|Not found| FraudTrue2["Set conversation data Fraud = true"]
+    FraudTrue2 --> Loop["Loop (max 5, state.index)"]
+    Loop --> GetState["Call Data action Get Conversation State"]
+    GetState -->|Success| SwitchState["Switch on state.state"]
+    SwitchState -->|Terminated| BypassPause["Set SecurePause = 'Bypass pause - call terminated'"]
+    BypassPause --> ExitLoop1["Exit loop → Called before"]
+    SwitchState -->|Default| GetStatePaused["Get Conversation State (Recordingstate = 'Paused')"]
+    GetStatePaused -->|Success| PauseSuccess["Set SecurePause = 'Success'"]
+    PauseSuccess --> ExitLoop2["Exit loop → Called before check"]
+    GetStatePaused -->|Failure| PauseFailed["Set SecurePause = 'Failed'"]
+    PauseFailed --> Email1["Call Task Email Notification"]
+    Email1 --> Loop
+    GetStatePaused -->|Timeout| PauseTimeout["Set SecurePause = 'Timeout'"]
+    PauseTimeout --> Email2["Call Task Email Notification"]
+    Email2 --> Loop
+    GetState -->|Failure| Loop
+    GetState -->|Timeout| Loop
+    ExitLoop1 --> CalledBefore
+    ExitLoop2 --> CalledBefore
+    CalledBefore["Called before (Call Data action)"]
+    CalledBefore -->|Success| CountCheck["Decision: count > 3?"]
+    CountCheck -->|Yes| CalledY["Set Called Before = 'Y'"]
+    CalledY --> End1["End Workflow"]
+    CountCheck -->|No| CalledN["Set Called Before = 'N'"]
+    CalledN --> End2["End Workflow"]
+    CalledBefore -->|Failure| CalledN2["Set Called Before = 'N'"]
+    CalledN2 --> End3["End Workflow"]
+    CalledBefore -->|Timeout| CalledN3["Set Called Before = 'N'"]
+    CalledN3 -->

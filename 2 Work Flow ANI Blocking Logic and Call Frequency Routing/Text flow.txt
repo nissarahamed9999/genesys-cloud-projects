@@ -1,0 +1,49 @@
+start
+Step 1.0: Trigger activity : Inbound call comes trigger workflow (check for fraud / called before)
+Step 2.0 check for fraud
+Step 2.1 Lookup ANI in Fraud Data table
+	Step  2.2.1 If found : 
+             Step  2.2.a.1 Set converstion data Fraud = true
+             Step  2.2.a.2 Disconnect
+          or
+	Step  2.2.1 If Not found : 
+             Step  2.2.a.1  Set converstion data Fraud = true
+Step  3.1 loop (Maximumloop 5, state.index)
+Step  3.1.1 Call Data action Get Conversation State : Input : ConverstionID : Flow.conversationID
+				   Output: state.state
+	  Step  3.1.1.1 Sucess :
+			Step  3.1.1.1 Switch:
+			Step  3.1.1.1.1 case 1: state.state ="Terminated"
+				       Step  3.1.1.1.1.1  Set converstion data SecurePause = "Bypass pause - call terminated"
+					 Step  3.1.1.1.1.2  Exit loop Jump to Called before
+				or
+			Step  3.1.1.1.1 Default : state.state = ""
+				Step  3.1.1.1.1.1 Call Data action Get Conversation State : Input : ConverstionID : Flow.conversationID , Recordingstate = "Paused"
+				   							Step  3.1.1.1.1.2 Success:
+                                                                                    Step  3.1.1.1.1.2.1 Set converstion data SecurePause = "Sucess"
+                                                                                    3.1.1.1.1.2.2 Exit loop Jump to 4.1
+														or	
+											Step  3.1.1.1.1.2 Failure : 
+                                                                                    Step  3.1.1.1.1.2.1 Set converstion data SecurePause = "Failed"
+											            	Step  3.1.1.1.1.2.2 Call Task Email Notification
+												            Step  3.1.1.1.1.3.1 Back to 3.1
+														or
+											Step  3.1.1.1.1.2 Timeout : 
+														Step  3.1.1.1.1.2.1 Set converstion data SecurePause = "Timeout"
+											            	Step  3.1.1.1.1.2.2 Call Task Email Notification
+		or										            Step  3.1.1.1.1.3.1 Back to 3.1 
+	   Step  3.1.1.1 Failure : Back to Step  3.1
+            or
+	   Step  3.1.1.1 Timeout : Back to Step  3.1
+Step  4.1 Called before Call Data action Input : ANI : call.ANI , Starttime : Currenttime , Endtime : Currenttime-24 hours , Output : Count
+	Step  4.1.1 Success: 
+	Step  4.1.1.2 Decision count >3
+	Step  4.1.1.3 Set converstion data Called Before= "Y"
+	Step  4.1.1.4 End Worflow
+or
+	Step  4.1.1 Failure : 
+	Step  4.1.2 Set converstion data Called Before= "N"
+	Step  4.1.3 End Worflow
+or
+	Step  4.1.1 Timeout : Set converstion data Called Before= "N"
+	Step  4.1.2 End Worflow
