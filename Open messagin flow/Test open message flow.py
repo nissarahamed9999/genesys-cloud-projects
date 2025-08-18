@@ -2,9 +2,9 @@ from PureCloudPlatformClientV2 import Configuration, ApiClient, ConversationsApi
 from PureCloudPlatformClientV2.rest import ApiException
 
 # Genesys Cloud credentials
-CLIENT_ID = '9c1b7504-b61b-4d92-9247-850d2119522a'
-CLIENT_SECRET = '5q3WSUylmqSj6Tf3TtFD-FkwIqfwxKetB7c-lCsnPN0'
-INTEGRATION_ID = 'a55bab08-4a74-4f76-9b63-bcd63a575a9e'
+CLIENT_ID = ''
+CLIENT_SECRET = ''
+INTEGRATION_ID = ''
 
 # ✅ Step 1: Set region host as string
 # Corrected line: Access the string value of the Enum
@@ -35,9 +35,9 @@ message_data = {
     "type": "Text",
     "text": "Hello from Python!",
     "from": {
-        "id": "918328310027",
+        "id": "",
         "idType": "phone",
-        "displayName": "Nissar"
+        "displayName": ""
     },
     "to": {
         "id": INTEGRATION_ID,
