@@ -1,4 +1,4 @@
-# WhatsApp ↔ Genesys Cloud Middleware
+# WhatsApp ↔ Middleware ↔ Genesys Cloud
 
 This Node.js middleware bridges WhatsApp Business Cloud API with Genesys Cloud Open Messaging. It securely routes inbound WhatsApp messages to Genesys and delivers outbound agent replies back to WhatsApp.
 
