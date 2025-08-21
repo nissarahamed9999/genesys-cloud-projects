@@ -4,6 +4,18 @@ This Node.js middleware bridges WhatsApp Business Cloud API with Genesys Cloud O
 
 ---
 
+## Genesys Open Messaging Integration
+
+This project integrates with [Genesys Cloud's Open Messaging API](https://developer.genesys.cloud/commdigital/digital/openmessaging/), enabling seamless communication between external messaging platforms and Genesys Cloud.
+
+### Features
+- Send and receive messages via custom messaging channels
+- Support for rich media and structured content
+- Event-driven architecture for real-time interactions
+
+For full API documentation and implementation details, visit the [Genesys Developer Center](https://developer.genesys.cloud/commdigital/digital/openmessaging/).
+
+
 ## 🚀 Features
 
 - ✅ Webhook verification for WhatsApp
