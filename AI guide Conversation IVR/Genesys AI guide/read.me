@@ -1,0 +1,100 @@
+# 🤖 Genesys Cloud Conversational IVR with AI Guide and Customer Data Caching
+
+This repository documents a Genesys Cloud IVR solution that uses an AI Guide to capture customer details, invoke external APIs, and cache data for faster routing in future interactions. It also includes a scheduled cleanup workflow to maintain data hygiene.
+
+---
+
+## 🧠 Overview
+
+This IVR solution is designed to:
+
+- Use an **AI Guide** inside a **Bot Flow** to capture:
+  - Business Name
+  - Business Address
+- Pass the captured data to:
+  - A **client API** for validation or enrichment
+  - A **Genesys Cloud datatable** (`cachetable`) for caching
+- Use **ANI (caller number)** as the primary key
+- Store the **current date** as metadata
+- Enable fast routing for returning customers
+- Run a **daily cleanup workflow** to remove records older than 30 days
+
+---
+
+## 🧩 Components
+
+### 1. AI Guide in Bot Flow
+
+- Built using **Genesys Dialog Engine Bot Flow**
+- Uses **AI Guide** to:
+  - Prompt the caller for business name and address
+  - Validate and confirm inputs
+  - Pass structured data to the main flow
+
+### 2. Client API Integration
+
+- Invoked via **Web Service Data Action**
+- Receives structured data from the bot
+- Returns enriched or validated customer details
+
+### 3. Datatable: `cachetable`
+
+| Key (ANI) | Business Name | Address | Date Added |
+|-----------|----------------|---------|-------------|
+| 9876543210 | Acme Corp      | Vizag   | 2025-10-17  |
+
+- Used for fast lookup when the customer calls again
+- Enables personalized routing and reduced bot interaction
+
+### 4. Daily Cleanup Workflow
+
+- Scheduled via **Genesys Workflow**
+- Runs once per day
+- Deletes records from `cachetable` that are older than 30 days
+
+---
+
+## 🔗 Flow Logic Summary
+
+1. **Inbound Call → IVR Flow**
+2. **IVR → Bot Flow → AI Guide**
+3. **AI Guide → Collects Business Name & Address**
+4. **Bot Flow → Calls Client API**
+5. **Bot Flow → Stores data in `cachetable` using ANI as key**
+6. **Future Calls → Lookup ANI → Route to Agent with Context**
+7. **Daily Workflow → Deletes stale records from `cachetable`**
+
+---
+
+## 🛡️ Benefits
+
+- Faster routing for repeat callers
+- Reduced bot interaction time
+- Improved agent context and personalization
+- Automated data hygiene and compliance
+
+---
+
+## 🧪 Testing & Validation
+
+- Simulate calls with test ANIs
+- Validate AI Guide prompts and confirmations
+- Confirm API responses and datatable entries
+- Monitor cleanup workflow logs
+
+---
+
+## 📚 References
+
+- [Genesys Cloud AI Guide](https://help.mypurecloud.com/articles/about-ai-guide/)
+- [Genesys Cloud Architect](https://help.mypurecloud.com/articles/about-architect/)
+- [Genesys Cloud Data Actions](https://developer.genesys.cloud/api/rest/v2/dataactions/)
+- [Genesys Cloud Datatables](https://help.mypurecloud.com/articles/about-datatables/)
+
+---
+
+## 👨‍💻 Maintainer
+
+Created by **Nissar**  
+Genesys Cloud Architect | Workflow Automation Specialist  
+📍 Machilipatnam/Ullipalem, India
