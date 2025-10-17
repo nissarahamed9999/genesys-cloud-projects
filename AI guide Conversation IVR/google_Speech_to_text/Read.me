@@ -1,0 +1,127 @@
+# 🗣️ Google Speech-to-Text Integration for Genesys Cloud
+
+This repository documents the step-by-step process to enable and integrate Google Cloud Speech-to-Text (STT) with Genesys Cloud. This integration allows transcription of customer audio in real time, improving bot accuracy, analytics, and automation.
+
+---
+
+## 📌 Overview
+
+Google STT provides high-accuracy transcription for voice interactions. When integrated with Genesys Cloud, it enables:
+
+- Real-time transcription of customer speech
+- Enhanced bot understanding for regional accents (e.g., Indian English)
+- Custom vocabulary support for domain-specific terms
+
+---
+
+## 🧰 Prerequisites
+
+- A Genesys Cloud account with admin access
+- A Google Cloud Platform (GCP) project with billing enabled
+- Node.js (for optional local testing)
+- Basic familiarity with Genesys Architect and Google Cloud Console
+
+---
+
+## 🔧 Step-by-Step Setup
+
+### 1. Set Up Google Cloud Speech-to-Text
+
+#### a. Create a GCP Project
+
+- Visit [Google Cloud Console](https://console.cloud.google.com/)
+- Create a new project or select an existing one
+
+#### b. Enable Billing
+
+- Attach a billing account to your project
+
+#### c. Enable the Speech-to-Text API
+
+- Go to **APIs & Services → Library**
+- Search for “Speech-to-Text API” and click **Enable**
+
+#### d. Create a Service Account
+
+- Navigate to **IAM & Admin → Service Accounts**
+- Click **Create Service Account**
+- Assign the role: `Editor` or a custom role with Speech-to-Text permissions
+- Generate a **JSON key** and download it securely
+
+---
+
+### 2. Configure Genesys Cloud Integration
+
+#### a. Install the Integration
+
+- Log in to [Genesys Cloud Admin](https://apps.mypurecloud.com/)
+- Go to **Admin → Integrations**
+- Search for “Google Cloud Speech-to-Text” in AppFoundry
+- Click **Install**
+
+#### b. Upload Google Credentials
+
+- During integration setup, upload the **JSON key file**
+- This allows Genesys to authenticate with Google’s API
+
+#### c. Configure Language and Audio Settings
+
+- Choose a supported language (e.g., `en-IN` for Indian English)
+- Set audio sampling rate (e.g., 8000 Hz for telephony)
+- Optionally enable **Speech Adaptation** for custom phrases
+
+---
+
+### 3. Use in Architect Flows
+
+#### a. Open Architect
+
+- Go to **Admin → Architect**
+- Select or create a **Bot Flow** or **Inbound Call Flow**
+
+#### b. Add Speech-to-Text Action
+
+- Insert a **Speech Recognition** or **Bot Input** action
+- Select the Google STT integration
+- Map the audio input to a variable
+- Use the transcribed text in decision logic or bot intents
+
+---
+
+### 4. Test and Validate
+
+- Deploy a test flow with voice input
+- Use real-world audio samples to validate transcription
+- Monitor logs in Genesys and Google Cloud Console
+
+---
+
+## 🧠 Tips for Indian Context
+
+- Use `en-IN` locale for better accent recognition
+- Add local names and phrases using Google’s Speech Adaptation
+- Benchmark against AWS and Azure STT for accuracy and latency
+
+---
+
+## 🔐 Security Notes
+
+- Never expose your service account JSON publicly
+- Use secure vaults or environment variables for credentials
+- Monitor usage and billing in Google Cloud Console
+
+---
+
+## 📚 References
+
+- [Google Cloud Speech-to-Text Docs](https://cloud.google.com/speech-to-text/docs)
+- [Genesys AppFoundry: Google STT](https://appfoundry.genesys.com/)
+- [Genesys Cloud Architect Help](https://help.mypurecloud.com/articles/about-architect/)
+
+---
+
+## 👨‍💻 Maintainer
+
+Built and documented by **Nissar**  
+Senior Genesys Cloud Architect | Voicebot & Workflow Automation Specialist  
+📍 Machilipatnam/Ullipalem, India

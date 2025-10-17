@@ -1,0 +1,34 @@
+# 🔐 Genesys Cloud Function Actions: AES-256-CBC Encryption & Decryption
+
+This repository contains two Genesys Cloud Function Actions designed to securely encrypt and decrypt customer data using Node.js and the AES-256-CBC algorithm. These functions are intended for use within Genesys workflows to protect sensitive information such as phone numbers, email addresses, or identifiers.
+
+## 📦 Contents
+
+- `encrypt.js`: Encrypts plaintext input using a symmetric key and IV.
+- `decrypt.js`: Decrypts AES-256-CBC encrypted hex strings back to plaintext.
+
+## 🚀 Deployment
+
+These actions are designed to be deployed as Genesys Cloud Functions via the Genesys Developer Center or Admin UI.
+
+### Prerequisites
+
+- Node.js 18+ runtime (as supported by Genesys Cloud Functions)
+- Genesys Cloud account with permission to create and manage Function Actions
+- Optional: Secure key and IV management via AWS KMS or Genesys Secure Data
+
+## 🔐 Encryption Function
+
+### File: `encrypt.js`
+
+Encrypts a plaintext string using AES-256-CBC.
+
+#### Input Payload
+
+```json
+{
+  "dataToEncrypt": "Sensitive customer info",
+  "encryptionKey": "64-char hex string (optional)",
+  "iv": "32-char hex string (optional)"
+}
+}

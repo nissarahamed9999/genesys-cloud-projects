@@ -1,0 +1,126 @@
+# 🗣️ Azure Speech-to-Text Integration for Genesys Cloud
+
+This repository documents the step-by-step process to enable and integrate Microsoft Azure Speech-to-Text (STT) with Genesys Cloud. This integration enables real-time transcription of customer audio, enhancing bot accuracy, analytics, and automation.
+
+---
+
+## 📌 Overview
+
+Azure STT provides robust transcription services with support for regional accents, noise handling, and custom vocabulary. When integrated with Genesys Cloud, it enables:
+
+- Real-time transcription of customer speech
+- Enhanced bot understanding for Indian English and other locales
+- Custom phrase lists for domain-specific accuracy
+
+---
+
+## 🧰 Prerequisites
+
+- Genesys Cloud account with admin access
+- Microsoft Azure subscription with Speech resource
+- Node.js (for optional local testing)
+- Familiarity with Genesys Architect and Azure Portal
+
+---
+
+## 🔧 Step-by-Step Setup
+
+### 1. Set Up Azure Speech Service
+
+#### a. Create a Speech Resource
+
+- Go to [Azure Portal](https://portal.azure.com/)
+- Navigate to **Create a resource → AI + Machine Learning → Speech**
+- Fill in:
+  - **Subscription**: Your Azure subscription
+  - **Resource Group**: Create or select existing
+  - **Region**: Choose closest to your Genesys region (e.g., `Central India`)
+  - **Pricing Tier**: Standard (F0 for free tier if eligible)
+
+#### b. Retrieve Keys and Endpoint
+
+- After deployment, go to the Speech resource
+- Copy:
+  - **Key 1** (or Key 2)
+  - **Region** (e.g., `centralindia`)
+  - **Endpoint** (e.g., `https://centralindia.api.cognitive.microsoft.com/`)
+
+---
+
+### 2. Configure Genesys Cloud Integration
+
+#### a. Install Azure STT Integration
+
+- Log in to [Genesys Cloud Admin](https://apps.mypurecloud.com/)
+- Go to **Admin → Integrations**
+- Search for “Azure Speech-to-Text” in AppFoundry
+- Click **Install**
+
+#### b. Configure Credentials
+
+- During setup, provide:
+  - **Subscription Key** (from Azure)
+  - **Region** (e.g., `centralindia`)
+  - **Endpoint** (optional if region is provided)
+
+#### c. Set Language and Audio Settings
+
+- Choose supported language (e.g., `en-IN` for Indian English)
+- Set audio sampling rate (e.g., 8000 Hz for telephony)
+- Optionally configure **custom phrases** in Azure Speech Studio
+
+---
+
+### 3. Use in Architect Flows
+
+#### a. Open Architect
+
+- Go to **Admin → Architect**
+- Select or create a **Bot Flow** or **Inbound Call Flow**
+
+#### b. Add Speech-to-Text Action
+
+- Insert a **Speech Recognition** or **Bot Input** action
+- Select the Azure STT integration
+- Map the audio input to a variable
+- Use the transcribed text in decision logic or bot intents
+
+---
+
+### 4. Test and Validate
+
+- Deploy a test flow with voice input
+- Use real-world audio samples to validate transcription
+- Monitor logs in Genesys and Azure Portal
+
+---
+
+## 🧠 Tips for Indian Context
+
+- Use `en-IN` locale for better accent recognition
+- Add local names and phrases using **Custom Phrase Lists** in Azure Speech Studio
+- Benchmark against Google and AWS STT for accuracy and latency
+
+---
+
+## 🔐 Security Notes
+
+- Store Azure keys securely (e.g., Genesys Secure Data or Azure Key Vault)
+- Rotate keys periodically
+- Monitor usage and billing in Azure Portal
+
+---
+
+## 📚 References
+
+- [Azure Speech-to-Text Docs](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/)
+- [Genesys AppFoundry: Azure STT](https://appfoundry.genesys.com/)
+- [Genesys Cloud Architect Help](https://help.mypurecloud.com/articles/about-architect/)
+
+---
+
+## 👨‍💻 Maintainer
+
+Built and documented by **Nissar**  
+Senior Genesys Cloud Architect | Voicebot & Workflow Automation Specialist  
+📍 Machilipatnam/Ullipalem, India
